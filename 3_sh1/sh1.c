@@ -15,7 +15,7 @@
         command[strlen(command)-1] = '\0';\
     }while(!command[0]);\
     strcpy(cmd, command);\
-    strtok(cmd, " ");\
+    strcpy(cmd, strtok(cmd, " "));\
 }
 
 //special command list
@@ -38,15 +38,15 @@ int cmdCheck(char* cmd){
 }
 
 void exitShell(int flag, char* m){
-        if (flag==0){
-                printf("exit()\n");
-        }
-        else if (m){
-                printf("\033[47;31mExit Error:\t%s\033[m\n", m);
-        }
-        else{
-                printf("\033[47;31mUnkown exit error !\033[m\n");
-        }
+    if (flag==0){
+		printf("exit()\n");
+	}
+	else if (m){
+		printf("\033[47;31mExit Error:\t%s\033[m\n", m);
+	}
+	else{
+		printf("\033[47;31mUnkown exit error !\033[m\n");
+	}
 }
 
 void mycd(char* command){
@@ -56,7 +56,7 @@ void mycd(char* command){
 
     strtok_r(command, " ", &sp);
     tmp = strtok_r(sp, " ", &sp);
-    if (tmp&&strlen(tmp)){
+    if (tmp&&strlen(tmp)&&strcmp(tmp, "~")&&strcmp(tmp, "~/")){
         if (chdir(tmp)){
             printf("shell: cd: %s: No such file or directory\n", tmp);
         }
@@ -83,21 +83,20 @@ void mypwd(){
 }
 
 int main(){
-        int exitFlag = 0;
-        char message[81] = "";
-        char command[81];
+    //init
+    int exitFlag = 0;
+    char message[81] = "";
+    char command[81];
     char cmd[81];
     int cmdID;
 
-        //welcome
-        printf("\033[47;34m-----------------------------------------------------------\033[m\n");
-        printf("\033[47;34m|                welcome to lyh's shell                   |\033[m\n");
-        printf("\033[47;34m-----------------------------------------------------------\033[m\n");
+    //welcome
+    printf("\033[47;34m-----------------------------------------------------------\033[m\n");
+    printf("\033[47;34m|                welcome to lyh's shell                   |\033[m\n");
+    printf("\033[47;34m-----------------------------------------------------------\033[m\n");
 
-        //init
-
-        //main cycle
-        newCommand();
+    //main cycle
+    newCommand();
     while(cmdID = cmdCheck(cmd)){  //cmdID = 0 -> exit
         switch(cmdID){
             case 1: //cd
@@ -120,11 +119,11 @@ int main(){
             printf("shell: %s: command not found!\n", strtok(command, " "));
         }
         newCommand();
-    }
-	*/
+        }
+    */
 
     //exit
-    exitShell(exitFlag, message);
-
-    return 0;
+	exitShell(exitFlag, message);
+	
+	return 0;
 }
