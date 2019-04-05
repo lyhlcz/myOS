@@ -92,8 +92,8 @@ while(cmdID != 0){
         case 2:		mypwd();break;
         default:	mysys();
     }
-	newCommand();
-	cmdID = cmdCheck(cmd);
+    newCommand();
+    cmdID = cmdCheck(cmd);
 }
 exit();
 ```
