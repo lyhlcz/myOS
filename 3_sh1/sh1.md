@@ -91,8 +91,8 @@ while cmdID != 0 :
         case 1:		mycd();
         case 2:		mypwd();
         default:	mysys();
-	end switch
-    newCommand();
+
+	newCommand();
 	cmdID = cmdCheck(cmd);
 end while
 exit();
