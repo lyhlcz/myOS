@@ -122,12 +122,12 @@ int main(){
                 if(mysys(command) == 65280){    //(-1)&0xFF00 = 65280
                     printf("shell: %s: command not found!\n", cmd);
                 }
-        }
+		}
         newCommand();
-    }
+	}
 	
 	//exit
 	exitShell(exitFlag, message);
-
+	
 	return 0;
 }
