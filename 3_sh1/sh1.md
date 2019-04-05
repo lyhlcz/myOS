@@ -85,7 +85,7 @@ int cmdCheck(char* cmd){
 ```c
 init();
 newCommand();
-cmdID = cmdCheck()
+cmdID = cmdCheck();
 while cmdID != 0 :
     switch cmdID :
         case 1:		mycd();
@@ -93,7 +93,7 @@ while cmdID != 0 :
         default:	mysys();
 	end switch
     newCommand();
-	cmdID = cmdCheck(cmd)
+	cmdID = cmdCheck(cmd);
 end while
 exit();
 ```
