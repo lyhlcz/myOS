@@ -86,15 +86,15 @@ int cmdCheck(char* cmd){
 init();
 newCommand();
 cmdID = cmdCheck();
-while cmdID != 0 :
-    switch (cmdID) :
-        case 1:		mycd();
-        case 2:		mypwd();
+while(cmdID != 0){
+    switch (cmdID){
+        case 1:		mycd();break;
+        case 2:		mypwd();break;
         default:	mysys();
-
+    }
 	newCommand();
 	cmdID = cmdCheck(cmd);
-end while
+}
 exit();
 ```
 
