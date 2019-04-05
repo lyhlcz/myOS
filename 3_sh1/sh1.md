@@ -87,7 +87,7 @@ init();
 newCommand();
 cmdID = cmdCheck();
 while cmdID != 0 :
-    switch cmdID :
+    switch (cmdID) :
         case 1:		mycd();
         case 2:		mypwd();
         default:	mysys();
