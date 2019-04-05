@@ -1,0 +1,4 @@
+export PATH=${PATH}:./
+gcc -o mycp mycp.c
+gcc -o myecho myecho.c
+gcc -o mycat mycat.c
