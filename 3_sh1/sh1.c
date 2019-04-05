@@ -110,11 +110,11 @@ int main(){
 	//main cycle
 	newCommand();
 	while(cmdID = cmdCheck(cmd)){  //cmdID = 0 -> exit
-        switch(cmdID){
-            case 1: //cd
-                mycd(command);
-                break;
-            case 2: //pwd
+		switch(cmdID){
+			case 1: //cd
+				mycd(command);
+				break;
+			case 2: //pwd
 				mypwd();
 				break;
             default: //common cmd
