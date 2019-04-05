@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+//#include <unistd.h>
+#include <pwd.h>
 #include "mysys.c"
+
+#define MAX_PATH 260
 
 //new command input
 #define newCommand() {\
@@ -45,12 +49,37 @@ void exitShell(int flag, char* m){
         }
 }
 
-void mycd(char* cmd){
-    printf("it's cd\n");
+void mycd(char* command){
+    //printf("it's cd\n");
+    char* sp;
+    char* tmp;
+
+    strtok_r(command, " ", &sp);
+    tmp = strtok_r(sp, " ", &sp);
+    if (tmp&&strlen(tmp)){
+        if (chdir(tmp)){
+            printf("shell: cd: %s: No such file or directory\n", tmp);
+        }
+    }
+    else{ //go to home
+        struct passwd* pw = NULL;
+        pw = getpwuid(getuid());
+        if (pw){
+            char home[81] = "/home/";
+            strcat(home, pw->pw_name);
+            chdir(home);
+        }
+    }
+
+    return;
 }
 
 void mypwd(){
-    printf("it's pwd\n");
+    char path[MAX_PATH+1];
+    //printf("it's pwd\n");
+    getcwd(path, MAX_PATH);
+    printf("%s\n", path);
+    return;
 }
 
 int main(){
@@ -62,7 +91,7 @@ int main(){
 
         //welcome
         printf("\033[47;34m-----------------------------------------------------------\033[m\n");
-        printf("\033[47;34m|                welcome to lyh's shell     |\033[m\n");
+        printf("\033[47;34m|                welcome to lyh's shell                   |\033[m\n");
         printf("\033[47;34m-----------------------------------------------------------\033[m\n");
 
         //init
@@ -91,10 +120,11 @@ int main(){
             printf("shell: %s: command not found!\n", strtok(command, " "));
         }
         newCommand();
-        }*/
+    }
+	*/
 
     //exit
-	exitShell(exitFlag, message);
+    exitShell(exitFlag, message);
 
-	return 0;
+    return 0;
 }
