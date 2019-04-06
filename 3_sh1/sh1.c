@@ -79,7 +79,7 @@ void mycd(char* command){
 			chdir(home);
 		}
 	}
-    else {  //error
+	else {  //error
 		printf("Username Error!\n");
 	}
 
