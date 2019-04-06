@@ -54,7 +54,7 @@ int mysys(char* command){
 }
 
 int main(){
-	printf("----------------------------------\n");
+    printf("----------------------------------\n");
     mysys("echo HELLO WORLD");
     printf("----------------------------------\n");
     mysys("ls /");
