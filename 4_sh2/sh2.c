@@ -103,16 +103,26 @@ void mypwd(){
 
 int redirect(char* cmd, char* filename, int* tfd){
     int i = 0;
-    *(filename) = '\0';
+    *filename = '\0';
     int fd;
+    char* tmp;
 
     //get command and filename
     for(;;i++){
         switch (*(cmd+i)){
             case '>':
                 *(cmd+i) = '\0';
-                strcpy(filename, cmd+i+1);
-                strcpy(filename, strtok(filename, " "));
+                if (*(cmd+i+1)){
+                    //strcpy(filename, cmd+i+1);
+                    tmp = strtok(cmd+i+1, " ");
+                    if (tmp)
+                        strcpy(filename, tmp);
+                    else *filename = '\0';
+                }
+                if (!*filename){
+                    printf("Error: endline with '>'\n");
+                    return NO_FILE;
+                }
                 fd = open(filename, O_CREAT|O_RDWR|O_TRUNC, 0666);
                 *tfd = dup(1);
                 dup2(fd, 1); //redirect stdout
@@ -120,8 +130,17 @@ int redirect(char* cmd, char* filename, int* tfd){
                 return RE_OUT;
             case '<':
                 *(cmd+i) = '\0';
-                strcpy(filename, cmd+i+1);
-                strcpy(filename, strtok(filename, " "));
+                if (*(cmd+i+1)){
+                    //strcpy(filename, cmd+i+1);
+                    tmp = strtok(cmd+i+1, " ");
+                    if (tmp)
+                        strcpy(filename, tmp);
+                    else *filename = '\0';
+                }
+                if (!*filename){
+                    printf("Error: endline with '<'\n");
+                    return NO_FILE;
+                }
                 fd = open(filename, O_RDONLY);
                 if (fd < 0){
                     return NO_FILE;
@@ -131,7 +150,7 @@ int redirect(char* cmd, char* filename, int* tfd){
                 close(fd);
                 return RE_IN;
             case '\0':
-                return 0;
+                return NO_RE;
         }
     }
 }
@@ -164,7 +183,7 @@ int main(){
 
     //welcome
     printf("\033[47;34m-----------------------------------------------------------\033[m\n");
-    printf("\033[47;34m|                welcome to lyh's shell |\033[m\n");
+    printf("\033[47;34m|                welcome to lyh's shell                   |\033[m\n");
     printf("\033[47;34m-----------------------------------------------------------\033[m\n");
 
     //main cycle
@@ -172,7 +191,8 @@ int main(){
     while(cmdID = cmdCheck(cmd)){  //cmdID = 0 -> exit
         //printf("cmd is %s\t file is %s\n", command, filename);
         if (rdFlag == NO_FILE){
-            printf("shell: %s: No such file or directory\n", filename);
+            if (*filename)
+                printf("shell: %s: No such file or directory\n", filename);
         }
         else{
             switch(cmdID){
