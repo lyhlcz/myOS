@@ -117,7 +117,7 @@ int main(){
 			case 2: //pwd
 				mypwd();
 				break;
-            default: //common cmd
+			default: //common cmd
 				//printf("%s\n",command);
 				if(mysys(command) == 65280){    //(-1)&0xFF00 = 65280
 					printf("shell: %s: command not found!\n", cmd);
