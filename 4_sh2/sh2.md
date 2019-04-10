@@ -232,8 +232,8 @@ while(cmdID != 0){
     }
     else{
         switch (cmdID){
-            case 1:		mycd();break;
-            case 2:		mypwd();break;
+            case 1:	mycd();break;
+            case 2:	mypwd();break;
             default:	mysys();
         }
     }
