@@ -203,7 +203,20 @@ int redirect(char* cmd, char* filename, int* tfd){
 恢复输入/输出
 
 ```c
-
+void unredirect(int flag, int tfd){
+    switch (flag){
+        case RE_OUT:
+            close(1);
+            dup2(tfd, 1);
+            close(tfd);
+            break;
+        case RE_IN:
+            close(0);
+            dup2(tfd, 0);
+            close(tfd);
+            break;
+    }
+}
 ```
 
 至此整个shell的流程更新为
